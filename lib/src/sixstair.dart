@@ -53,14 +53,26 @@ class SixStair {
     _applyGravity();
   }
   
-  void _applyGravity() {
+  int indexChoose(int color, {List<int> ignore: null}) {
+    List<int> colors = toColorList(ignore: ignore);
+    List<bool> flags = new List.from(colors.map((x) => x == color));
+    return new ChooseEncoder(flags, color).generateHash();
+  }
+  
+  List<int> toColorList({List<int> ignore: null}) {
+    List<int> colors = new List<int>();
     for (int i = 0; i < 6; i++) {
-      Tube top = topTubes[i];
-      Tube bottom = bottomTubes[i];
-      while (top.length > 0 && bottom.length < bottom.capacity) {
-        bottom.push(top.popFront());
+      List<Tube> ts = [topTubes[i], bottomTubes[i]];
+      for (Tube t in ts) {
+        for (int j = 0; j < t.length; j++) {
+          int color = t[j];
+          if (ignore == null || !ignore.contains(color)) {
+            colors.add(color);
+          }
+        }        
       }
     }
+    return colors;
   }
   
   String toString({String newLineStr: '\n', int spaces: 0}) {
@@ -110,5 +122,15 @@ class SixStair {
     }
     
     return buffer.toString();
+  }
+  
+  void _applyGravity() {
+    for (int i = 0; i < 6; i++) {
+      Tube top = topTubes[i];
+      Tube bottom = bottomTubes[i];
+      while (top.length > 0 && bottom.length < bottom.capacity) {
+        bottom.push(top.popFront());
+      }
+    }
   }
 }
