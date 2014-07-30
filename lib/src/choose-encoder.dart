@@ -16,11 +16,11 @@ int _choose(int a, int b) {
   return endFac ~/ bFac;
 }
 
-class ChooseEncoder {
+class _ChooseEncoder {
   final List<bool> flags;
   int expected;
   
-  ChooseEncoder(this.flags, this.expected);
+  _ChooseEncoder(this.flags, this.expected);
   
   int generateHash() {
     if (flags.length == 0 || expected == 0) return 0;

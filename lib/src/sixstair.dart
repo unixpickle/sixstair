@@ -4,6 +4,13 @@ class SixStair {
   List<Tube> topTubes;
   List<Tube> bottomTubes;
   
+  bool get topEmpty {
+    for (int i = 0; i < topTubes.length; i++) {
+      if (topTubes[i].length != 0) return false; 
+    }
+    return true;
+  }
+  
   /**
    * Create a solved and upright [SixStair].
    */
@@ -105,7 +112,7 @@ class SixStair {
   int indexChoose(int color, {List<int> ignore: null}) {
     List<int> colors = toColorList(ignore: ignore);
     List<bool> flags = new List.from(colors.map((x) => x == color));
-    return new ChooseEncoder(flags, color).generateHash();
+    return new _ChooseEncoder(flags, color).generateHash();
   }
   
   /**

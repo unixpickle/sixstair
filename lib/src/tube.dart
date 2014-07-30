@@ -25,6 +25,7 @@ class Tube {
   }
   
   Tube.from(Tube t) : capacity = t.capacity, balls = new Uint8List(t.capacity) {
+    length = 0;
     for (int i = 0; i < t.length; i++) {
       push(t[i]);
     }
