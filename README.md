@@ -2,4 +2,4 @@
 
 My goal is to programmatically solve this puzzle:
 
-![SixStair.jpg](sixstair.jpg)
+![SixStair.jpg](sixstair.png)
