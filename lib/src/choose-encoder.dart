@@ -1,6 +1,8 @@
 part of sixstair;
 
-// generates a choose b
+/**
+ * Generate [a] unordered-choose [b].
+ */
 int _choose(int a, int b) {
   // a!/(b!)(a - b)!
   int endFac = 1;

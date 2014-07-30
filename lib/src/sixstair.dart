@@ -4,6 +4,9 @@ class SixStair {
   List<Tube> topTubes;
   List<Tube> bottomTubes;
   
+  /**
+   * Create a solved and upright [SixStair].
+   */
   SixStair.identity() : topTubes = [], bottomTubes = [] {
     for (int i = 1; i <= 6; ++i) {
       topTubes.add(new Tube.empty(i));
@@ -14,6 +17,9 @@ class SixStair {
     }
   }
   
+  /**
+   * Deep-copy a [SixStair] object.
+   */
   SixStair.from(SixStair s) : topTubes = [], bottomTubes = [] {
     for (int i = 0; i < 6; ++i) {
       topTubes.add(new Tube.from(s.topTubes[i]));
@@ -21,7 +27,41 @@ class SixStair {
     }
   }
   
+  /**
+   * Create [SixStair] from command-line arguments. The arguments go from the
+   * smallest tubes to the largest tubes. The first argument is the bottom
+   * tube, then the top tube, etc.
+   */
+  SixStair.fromArgs(List<String> args) : topTubes = [], bottomTubes = [] {
+    if (args.length != 12) throw new RangeError('SixStair requires 12 args');
+    for (int i = 0; i < 12; i++) {
+      String arg = args[i];
+      if (arg.length > (i + 2) ~/ 2) {
+        throw new RangeError('excessive balls in well $i');
+      }
+      Tube t = new Tube.empty(i + 1);
+      for (int j = 0; j < args.length; j++) {
+        int num = int.parse(args[0]);
+        if (num < 1 || num > 6) {
+          throw new RangeError('invalid color: $num');
+        }
+        t.push(num);
+      }
+      if (i % 2 == 0) {
+        bottomTubes[i ~/ 2] = t;
+      } else {
+        topTubes[i ~/ 2] = t;
+      }
+    }
+    
+    _validate();
+  }
+  
+  /**
+   * Turn the top clockwise [rotations] times before applying gravity.
+   */
   void turn(int rotations) {
+    if (rotations < 0) return turn(6 + rotations);
     List<Tube> oldTop = new List.from(topTubes);
     for (int i = 0; i < 6; i++) {
       topTubes[i] = oldTop[(i + rotations) % 6];
@@ -29,6 +69,9 @@ class SixStair {
     _applyGravity();
   }
   
+  /**
+   * Perform a flip around the z-axis.
+   */
   void flip() {
     // flip around x axis
     List<Tube> tempTop = topTubes;
@@ -53,12 +96,34 @@ class SixStair {
     _applyGravity();
   }
   
+  /**
+   * Return a number which represents the layout of the [color] balls.
+   * 
+   * You may optionally ignore other colors for this index by passing a list of
+   * colors to [ignore].
+   */
   int indexChoose(int color, {List<int> ignore: null}) {
     List<int> colors = toColorList(ignore: ignore);
     List<bool> flags = new List.from(colors.map((x) => x == color));
     return new ChooseEncoder(flags, color).generateHash();
   }
   
+  /**
+   * Returns a number in the range [0, 162954791] which represents the layout of
+   * the orange and green balls. This range is derived from the product of
+   * (21 choose 6) and (15 choose 5).
+   */
+  int indexMajorPair() {
+    return indexChoose(6) * 3003 + indexChoose(5, ignore: [6]);
+  }
+  
+  /**
+   * Generate an ordered list of colors. The list simply iterates through the
+   * colors in each tube starting with the top left-most tube, moving to the
+   * bottom leftmost tube, etc.
+   * 
+   * This is useful for generating indexes.
+   */
   List<int> toColorList({List<int> ignore: null}) {
     List<int> colors = new List<int>();
     for (int i = 0; i < 6; i++) {
@@ -75,6 +140,27 @@ class SixStair {
     return colors;
   }
   
+  /**
+   * Dump a [SixStair] to a visual, ASCII-art style representation. The
+   * resultant puzzle may look something like this:
+   *
+   *      _                
+   *     | | _             
+   *     |6|| | _          
+   *     |6|| || | _       
+   *     |6|| || || | _    
+   *     |6|| || || || | _ 
+   *     |6|| || || || || |
+   *     ------------------
+   *     |6|| || || || || |
+   *      - |5||4||3||2||1|
+   *        |5||4||3||2| - 
+   *        |5||4||3| -    
+   *        |5||4| -       
+   *        |5| -          
+   *         -
+   *              
+   */
   String toString({String newLineStr: '\n', int spaces: 0}) {
     String newLine = newLineStr;
     for (int i = 0; i < spaces; i++) {
@@ -130,6 +216,18 @@ class SixStair {
       Tube bottom = bottomTubes[i];
       while (top.length > 0 && bottom.length < bottom.capacity) {
         bottom.push(top.popFront());
+      }
+    }
+  }
+  
+  void _validate() {
+    Map<int, int> counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
+    for (int num in toColorList()) {
+      ++counts[num];
+    }
+    for (int i = 1; i <= 6; i++) {
+      if (counts[i] != i) {
+        throw new StateError('invalid number (${counts[i]}) of color $i');
       }
     }
   }

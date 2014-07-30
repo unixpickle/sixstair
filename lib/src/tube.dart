@@ -6,11 +6,19 @@ class Tube {
   static const int BALL_BLUE = 3;
   static const int BALL_YELLOW = 4;
   static const int BALL_GREEN = 5;
-  static const int BALL_REd = 6;
+  static const int BALL_RED = 6;
   
   final int capacity;
   final Uint8List balls;
   int length;
+  
+  bool get solved {
+    if (length != capacity) return false;
+    for (int i = 0; i < length; i++) {
+      if (this[i] != capacity) return false;
+    }
+    return true;
+  }
   
   Tube.empty(int cap) : capacity = cap, balls = new Uint8List(cap) {
     length = 0;
