@@ -1,6 +1,6 @@
 part of sixstair;
 
-class IndexNode extends LinkedListEntry {
+class IndexNode {
   final int depth;
   final bool hasMovedEmpty;
   final SixStair item;
@@ -42,22 +42,20 @@ class IndexNode extends LinkedListEntry {
 }
 
 class Indexer {
-  final LinkedList<IndexNode> nodes;
   int maxDepth;
   
-  Indexer(this.maxDepth) : nodes = new LinkedList<IndexNode>() {
-    nodes.add(new IndexNode(0, new SixStair.identity()));
+  Indexer(this.maxDepth) {
   }
   
-  IndexNode run() {
-    if (nodes.length == 0) return null;
-    IndexNode first = nodes.first;
-    nodes.remove(nodes.first);
-    if (first.depth < maxDepth) {
-      for (IndexNode n in first.expand()) {
-        nodes.add(n);
+  void run(Function f, [IndexNode node = null]) {
+    if (node == null) {
+      return run(f, new IndexNode(0, new SixStair.identity()));
+    }
+    f(node);
+    if (node.depth < maxDepth) {
+      for (IndexNode n in node.expand()) {
+        run(f, n);
       }
     }
-    return first;
   }
 }

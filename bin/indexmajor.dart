@@ -2,6 +2,7 @@
 
 import '../lib/sixstair.dart';
 import 'dart:io';
+import 'dart:typed_data';
 
 void main(List<String> args) {
   if (args.length != 2) {
@@ -9,22 +10,41 @@ void main(List<String> args) {
     exit(1);
   }
   String outputPath = args[1];
-  RandomAccessFile f = new File(outputPath).openSync(mode: FileMode.APPEND);
+  Uint8List buffer = new Uint8List(162954792);
+  
+  for (int i = 0; i < buffer.length; i++) {
+    buffer[i] = 0xff;
+  }
+  
   Indexer idx = new Indexer(int.parse(args[0]));
   int count = 0;
-  while (true) {
-    IndexNode node = idx.run();
-    if (node == null) break;
-    int hashIdx = node.item.indexChoose(6);
-    if (node.depth == 0 || hashIdx == 0) continue;
-    f.setPositionSync(hashIdx);
-    int cur = f.readByteSync();
-    if (cur == 0 && hashIdx != 0) {
+  int nodeCount = 0;
+  idx.run((IndexNode node) {
+    nodeCount++;
+    int hashIdx = node.item.indexMajorPair();
+    if (hashIdx == 0) return;
+    
+    if (buffer[hashIdx] > node.depth) {
+      buffer[hashIdx] = node.depth;
       count++;
-      f.writeByteSync(node.depth);
-      if (count % 10 == 0) {
-        print("indexed $count nodes");
+      if (count % 1000 == 0) {
+        print('set $count hashes [explored=$nodeCount]');
       }
     }
+  });
+  
+  int hashCount = 0;
+  for (int i = 0; i < buffer.length; i++) {
+    if (buffer[i] < 0xff) {
+      ++hashCount;
+    }
   }
+  
+  print('found a total of $hashCount hashes');
+  
+  new File(outputPath).writeAsBytes(buffer).then((_) {
+    print('wrote to ' + outputPath);
+  }).catchError((e) {
+    print('error writing file: $e');
+  });
 }

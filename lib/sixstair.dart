@@ -1,7 +1,6 @@
 library sixstair;
 
 import 'dart:typed_data';
-import 'dart:collection';
 
 part 'src/tube.dart';
 part 'src/sixstair.dart';
