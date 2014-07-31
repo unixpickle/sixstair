@@ -3,6 +3,7 @@ part of sixstair;
 class SixStair {
   List<Tube> topTubes;
   List<Tube> bottomTubes;
+  bool isFlipped;
   
   bool get topEmpty {
     for (int i = 0; i < topTubes.length; i++) {
@@ -15,6 +16,7 @@ class SixStair {
    * Create a solved and upright [SixStair].
    */
   SixStair.identity() : topTubes = [], bottomTubes = [] {
+    isFlipped = false;
     for (int i = 1; i <= 6; ++i) {
       topTubes.add(new Tube.empty(i));
       bottomTubes.add(new Tube.empty(i));
@@ -28,6 +30,7 @@ class SixStair {
    * Deep-copy a [SixStair] object.
    */
   SixStair.from(SixStair s) : topTubes = [], bottomTubes = [] {
+    isFlipped = s.isFlipped;
     for (int i = 0; i < 6; ++i) {
       topTubes.add(new Tube.from(s.topTubes[i]));
       bottomTubes.add(new Tube.from(s.bottomTubes[i]));
@@ -40,6 +43,7 @@ class SixStair {
    * tube, then the top tube, etc.
    */
   SixStair.fromArgs(List<String> args) : topTubes = [], bottomTubes = [] {
+    isFlipped = false;
     if (args.length != 12) throw new RangeError('SixStair requires 12 args');
     for (int i = 0; i < 12; i++) {
       String arg = args[i];
@@ -80,6 +84,8 @@ class SixStair {
    * Perform a flip around the z-axis.
    */
   void flip() {
+    isFlipped = !isFlipped;
+    
     // flip around x axis
     List<Tube> tempTop = topTubes;
     topTubes = bottomTubes;
@@ -125,11 +131,23 @@ class SixStair {
   }
   
   bool isTubeSolved(int size) {
-    for (int i = 0; i < bottomTubes.length; i++) {
+    for (int i = 0; i < 6; i++) {
       if (bottomTubes[i].capacity != size) continue;
       return bottomTubes[i].solved;
     }
     return false;
+  }
+  
+  bool isBottomSolved(int count) {
+    for (int i = 0; i < 6; i++) {
+      Tube t = bottomTubes[i];
+      int req = t.capacity > count ? count : t.capacity;
+      if (req > t.length) return false;
+      for (int j = 0; j < req; j++) {
+        if (t[j] != t.capacity) return false; 
+      }
+    }
+    return true;
   }
   
   /**

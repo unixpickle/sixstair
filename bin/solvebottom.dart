@@ -4,21 +4,18 @@ import '../lib/sixstair.dart';
 import 'dart:io';
 
 void main(List<String> args) {
-  if (args.length < 1) {
-    print('Usage: dart bin/solvetube.dart <tube number> [<tube number> ...]');
+  if (args.length != 1) {
+    print('Usage: dart bin/solvebottom.dart <bottom count>');
     exit(1);
   }
   
-  Set<int> tubes = new Set<int>();
-  for (String a in args) {
-    tubes.add(int.parse(a));
-  }
+  int bottomCount = int.parse(args[0]);
   
   readSixStair().then((SixStair s) {
-    print('solving: ${s.toString(spaces: 9)}');
+    print('using: ${s.toString(spaces: 7)}');
     int depth = 0;
     while (true) {
-      String solution = attemptSolve(s, depth, tubes);
+      String solution = attemptSolve(s, depth, bottomCount);
       if (solution != null) {
         print('Solution: $solution');
         break;
@@ -28,15 +25,14 @@ void main(List<String> args) {
   });
 }
 
-String attemptSolve(SixStair s, int depth, Set<int> tubes) {
+String attemptSolve(SixStair s, int depth, int count) {
   print('attempting depth $depth');
   String solution = null;
   new Brancher(depth, s).run((BrancherNode n) {
     if (n.depth < depth) return true;
-    for (int tube in tubes) {
-      if (!n.item.isTubeSolved(tube)) {
-        return true;
-      }
+    if (n.item.isFlipped) return true;
+    if (!n.item.isBottomSolved(count)) {
+      return true;
     }
     if (n.algorithm.length > 0) {
       solution = n.algorithm.substring(1);
