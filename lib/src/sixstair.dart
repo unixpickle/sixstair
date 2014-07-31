@@ -46,18 +46,18 @@ class SixStair {
       if (arg.length > (i + 2) ~/ 2) {
         throw new RangeError('excessive balls in well $i');
       }
-      Tube t = new Tube.empty(i + 1);
-      for (int j = 0; j < args.length; j++) {
-        int num = int.parse(args[0]);
+      Tube t = new Tube.empty(1 + i ~/ 2);
+      for (int j = 0; j < arg.length; j++) {
+        int num = int.parse(arg[j]);
         if (num < 1 || num > 6) {
           throw new RangeError('invalid color: $num');
         }
         t.push(num);
       }
       if (i % 2 == 0) {
-        bottomTubes[i ~/ 2] = t;
+        bottomTubes.add(t);
       } else {
-        topTubes[i ~/ 2] = t;
+        topTubes.add(t);
       }
     }
     
@@ -116,12 +116,20 @@ class SixStair {
   }
   
   /**
-   * Returns a number in the range [0, 162954791] which represents the layout of
+   * Returns a number in the range (0, 162954791) which represents the layout of
    * the orange and green balls. This range is derived from the product of
    * (21 choose 6) and (15 choose 5).
    */
   int indexMajorPair() {
     return indexChoose(6) * 3003 + indexChoose(5, ignore: [6]);
+  }
+  
+  bool isTubeSolved(int size) {
+    for (int i = 0; i < bottomTubes.length; i++) {
+      if (bottomTubes[i].capacity != size) continue;
+      return bottomTubes[i].solved;
+    }
+    return false;
   }
   
   /**
