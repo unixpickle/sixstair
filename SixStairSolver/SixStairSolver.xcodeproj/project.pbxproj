@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		FA2D82F9198ADA1D0061689B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D82F8198ADA1D0061689B /* main.cpp */; };
 		FA2D82FB198ADA1D0061689B /* SixStairSolver.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA2D82FA198ADA1D0061689B /* SixStairSolver.1 */; };
-		FA2D830E198B16400061689B /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D830A198B16400061689B /* state.cpp */; };
-		FA2D830F198B16400061689B /* tube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D830C198B16400061689B /* tube.cpp */; };
-		FA2D8312198B16C30061689B /* checker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8310198B16C30061689B /* checker.cpp */; };
-		FA2D8315198B19490061689B /* search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8313198B19490061689B /* search.cpp */; };
-		FA2D8318198B19D60061689B /* move-list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8316198B19D60061689B /* move-list.cpp */; };
+		FA2D8324198B22480061689B /* checker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D831A198B22480061689B /* checker.cpp */; };
+		FA2D8325198B22480061689B /* move-list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D831C198B22480061689B /* move-list.cpp */; };
+		FA2D8326198B22480061689B /* search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D831E198B22480061689B /* search.cpp */; };
+		FA2D8327198B22480061689B /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8320198B22480061689B /* state.cpp */; };
+		FA2D8328198B22480061689B /* tube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8322198B22480061689B /* tube.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,16 +33,16 @@
 		FA2D82F5198ADA1D0061689B /* SixStairSolver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SixStairSolver; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA2D82F8198ADA1D0061689B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FA2D82FA198ADA1D0061689B /* SixStairSolver.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = SixStairSolver.1; sourceTree = "<group>"; };
-		FA2D830A198B16400061689B /* state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = state.cpp; sourceTree = "<group>"; };
-		FA2D830B198B16400061689B /* state.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state.hpp; sourceTree = "<group>"; };
-		FA2D830C198B16400061689B /* tube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tube.cpp; sourceTree = "<group>"; };
-		FA2D830D198B16400061689B /* tube.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tube.hpp; sourceTree = "<group>"; };
-		FA2D8310198B16C30061689B /* checker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checker.cpp; sourceTree = "<group>"; };
-		FA2D8311198B16C30061689B /* checker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = checker.hpp; sourceTree = "<group>"; };
-		FA2D8313198B19490061689B /* search.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = search.cpp; sourceTree = "<group>"; };
-		FA2D8314198B19490061689B /* search.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = search.hpp; sourceTree = "<group>"; };
-		FA2D8316198B19D60061689B /* move-list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "move-list.cpp"; sourceTree = "<group>"; };
-		FA2D8317198B19D60061689B /* move-list.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "move-list.hpp"; sourceTree = "<group>"; };
+		FA2D831A198B22480061689B /* checker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checker.cpp; sourceTree = "<group>"; };
+		FA2D831B198B22480061689B /* checker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = checker.hpp; sourceTree = "<group>"; };
+		FA2D831C198B22480061689B /* move-list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "move-list.cpp"; sourceTree = "<group>"; };
+		FA2D831D198B22480061689B /* move-list.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "move-list.hpp"; sourceTree = "<group>"; };
+		FA2D831E198B22480061689B /* search.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = search.cpp; sourceTree = "<group>"; };
+		FA2D831F198B22480061689B /* search.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = search.hpp; sourceTree = "<group>"; };
+		FA2D8320198B22480061689B /* state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = state.cpp; sourceTree = "<group>"; };
+		FA2D8321198B22480061689B /* state.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state.hpp; sourceTree = "<group>"; };
+		FA2D8322198B22480061689B /* tube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tube.cpp; sourceTree = "<group>"; };
+		FA2D8323198B22480061689B /* tube.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tube.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,18 +85,26 @@
 		FA2D8309198B16400061689B /* SixStairLib */ = {
 			isa = PBXGroup;
 			children = (
-				FA2D830B198B16400061689B /* state.hpp */,
-				FA2D830A198B16400061689B /* state.cpp */,
-				FA2D830D198B16400061689B /* tube.hpp */,
-				FA2D830C198B16400061689B /* tube.cpp */,
-				FA2D8311198B16C30061689B /* checker.hpp */,
-				FA2D8310198B16C30061689B /* checker.cpp */,
-				FA2D8314198B19490061689B /* search.hpp */,
-				FA2D8313198B19490061689B /* search.cpp */,
-				FA2D8317198B19D60061689B /* move-list.hpp */,
-				FA2D8316198B19D60061689B /* move-list.cpp */,
+				FA2D8319198B22480061689B /* base */,
 			);
 			path = SixStairLib;
+			sourceTree = "<group>";
+		};
+		FA2D8319198B22480061689B /* base */ = {
+			isa = PBXGroup;
+			children = (
+				FA2D831A198B22480061689B /* checker.cpp */,
+				FA2D831B198B22480061689B /* checker.hpp */,
+				FA2D831C198B22480061689B /* move-list.cpp */,
+				FA2D831D198B22480061689B /* move-list.hpp */,
+				FA2D831E198B22480061689B /* search.cpp */,
+				FA2D831F198B22480061689B /* search.hpp */,
+				FA2D8320198B22480061689B /* state.cpp */,
+				FA2D8321198B22480061689B /* state.hpp */,
+				FA2D8322198B22480061689B /* tube.cpp */,
+				FA2D8323198B22480061689B /* tube.hpp */,
+			);
+			path = base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,12 +158,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA2D8315198B19490061689B /* search.cpp in Sources */,
+				FA2D8327198B22480061689B /* state.cpp in Sources */,
 				FA2D82F9198ADA1D0061689B /* main.cpp in Sources */,
-				FA2D8318198B19D60061689B /* move-list.cpp in Sources */,
-				FA2D8312198B16C30061689B /* checker.cpp in Sources */,
-				FA2D830E198B16400061689B /* state.cpp in Sources */,
-				FA2D830F198B16400061689B /* tube.cpp in Sources */,
+				FA2D8326198B22480061689B /* search.cpp in Sources */,
+				FA2D8324198B22480061689B /* checker.cpp in Sources */,
+				FA2D8325198B22480061689B /* move-list.cpp in Sources */,
+				FA2D8328198B22480061689B /* tube.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

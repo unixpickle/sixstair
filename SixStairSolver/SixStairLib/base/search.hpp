@@ -14,7 +14,7 @@ public:
   void Stop();
   
 protected:
-  virtual void HandleNode(const State & s, const MoveList & moves) = 0;
+  virtual void HandleNode(const State & state, const MoveList & moves) = 0;
   
 private:
   State start;
