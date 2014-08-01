@@ -29,7 +29,7 @@ void Search::ExpandAndSearch(const State & state, const MoveList & moves,
   if (!hasFlipped) {
     newState.Flip();
     newMoves.Push(MoveList::Move(true, 0));
-    ExpandAndSearch(state, moves, false, true);
+    ExpandAndSearch(newState, newMoves, false, true);
     if (stopped) return;
   }
   

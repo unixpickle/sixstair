@@ -33,6 +33,14 @@ public:
     return bottom[idx];
   }
   
+  inline Tube & GetTop(int idx) {
+    return top[idx];
+  }
+  
+  inline Tube & GetBottom(int idx) {
+    return bottom[idx];
+  }
+  
 private:
   Tube top[6];
   Tube bottom[6];
