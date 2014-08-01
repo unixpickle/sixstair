@@ -24,6 +24,9 @@
 		FA2D8344198B2B7D0061689B /* tube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8322198B22480061689B /* tube.cpp */; };
 		FA2D8345198B2B810061689B /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D833A198B25610061689B /* input.cpp */; };
 		FA2D8346198B2B830061689B /* tube-solver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D832A198B22950061689B /* tube-solver.cpp */; };
+		FA2D8349198BD1C80061689B /* state-solver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8347198BD1C80061689B /* state-solver.cpp */; };
+		FA2D834A198BD4170061689B /* state-solver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8347198BD1C80061689B /* state-solver.cpp */; };
+		FA2D834D198BD4280061689B /* printing-state-solver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D834B198BD4280061689B /* printing-state-solver.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +71,10 @@
 		FA2D833B198B25610061689B /* input.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
 		FA2D833D198B28FD0061689B /* printing-tube-solver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "printing-tube-solver.cpp"; sourceTree = "<group>"; };
 		FA2D833E198B28FD0061689B /* printing-tube-solver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "printing-tube-solver.hpp"; sourceTree = "<group>"; };
+		FA2D8347198BD1C80061689B /* state-solver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "state-solver.cpp"; sourceTree = "<group>"; };
+		FA2D8348198BD1C80061689B /* state-solver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "state-solver.hpp"; sourceTree = "<group>"; };
+		FA2D834B198BD4280061689B /* printing-state-solver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "printing-state-solver.cpp"; sourceTree = "<group>"; };
+		FA2D834C198BD4280061689B /* printing-state-solver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "printing-state-solver.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				FA2D82F8198ADA1D0061689B /* main.cpp */,
+				FA2D834C198BD4280061689B /* printing-state-solver.hpp */,
+				FA2D834B198BD4280061689B /* printing-state-solver.cpp */,
 			);
 			path = SixStairSolver;
 			sourceTree = "<group>";
@@ -148,6 +157,8 @@
 			children = (
 				FA2D832B198B22950061689B /* tube-solver.hpp */,
 				FA2D832A198B22950061689B /* tube-solver.cpp */,
+				FA2D8348198BD1C80061689B /* state-solver.hpp */,
+				FA2D8347198BD1C80061689B /* state-solver.cpp */,
 			);
 			path = searches;
 			sourceTree = "<group>";
@@ -232,6 +243,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA2D8327198B22480061689B /* state.cpp in Sources */,
+				FA2D834D198BD4280061689B /* printing-state-solver.cpp in Sources */,
+				FA2D834A198BD4170061689B /* state-solver.cpp in Sources */,
 				FA2D832C198B22950061689B /* tube-solver.cpp in Sources */,
 				FA2D833C198B25610061689B /* input.cpp in Sources */,
 				FA2D82F9198ADA1D0061689B /* main.cpp in Sources */,
@@ -246,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA2D8349198BD1C80061689B /* state-solver.cpp in Sources */,
 				FA2D8334198B254E0061689B /* main.cpp in Sources */,
 				FA2D833F198B28FD0061689B /* printing-tube-solver.cpp in Sources */,
 				FA2D8340198B2B700061689B /* checker.cpp in Sources */,
@@ -332,6 +346,7 @@
 		FA2D82FF198ADA1D0061689B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -339,6 +354,7 @@
 		FA2D8300198ADA1D0061689B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

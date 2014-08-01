@@ -28,13 +28,15 @@ int main(int argc, const char * argv[]) {
   }
   
   std::stringstream err("");
-  State * state = ReadState(cout, cin, err);
-  if (!state) {
+  State * s = ReadState(cout, cin, err);
+  if (!s) {
     cerr << err.str() << endl;
     return 1;
   }
+  State state(*s);
+  delete s;
   
-  cout << "Solving: " << state->ToString("\n         ") << endl;
+  cout << "Solving: " << state.ToString("\n         ") << endl;
   
   TubeSolver::TubeList tubes;
   tubes.count = 0;
@@ -45,13 +47,12 @@ int main(int argc, const char * argv[]) {
   int depth = 0;
   while (1) {
     cout << "exploring depth " << depth << " ..." << endl;
-    PrintingTubeSolver solver(*state, depth, tubes, onlyOne);
+    PrintingTubeSolver solver(state, depth, tubes, onlyOne);
     solver.Run();
-    if (solver.GetDidSolve()) return 0;
+    if (solver.GetDidSolve() && onlyOne) return 0;
     ++depth;
   }
   
-  delete state;
   return 0;
 }
 
