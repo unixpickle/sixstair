@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>wildcardsolve.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -23,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>FA2D8330198B254E0061689B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FAF8A495198C09DB00928D58</key>
 		<dict>
 			<key>primary</key>
 			<true/>
