@@ -9,8 +9,11 @@ namespace sixstair {
 class MoveList {
 public:
   struct Move {
-    char isFlip : 1;
-    char turns : 4;
+    char isFlip;
+    char turns;
+    
+    Move() : isFlip(0), turns(0) {
+    }
     
     Move(bool flip, int count)
       : isFlip(flip ? 1 : 0), turns((char)(count + 5)) {
@@ -36,6 +39,10 @@ public:
     return moves[idx];
   }
   
+  inline Move & operator[](int idx) {
+    return moves[idx];
+  }
+  
   inline void Push(const Move & m) {
     assert(length < 0x20);
     moves[length++] = m;
@@ -45,7 +52,7 @@ public:
   
 private:
   Move moves[0x20];
-  int length;
+  int length = 0;
 };
 
 }

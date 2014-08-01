@@ -11,6 +11,7 @@ public:
   
   bool IsTubeSolved(int size) const;
   bool AreDregsSolved(int depth) const;
+  bool IsTopEmpty() const;
   
 private:
   const State & state;

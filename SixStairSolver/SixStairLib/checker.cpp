@@ -27,4 +27,11 @@ bool Checker::AreDregsSolved(int depth) const {
   return true;
 }
 
+bool Checker::IsTopEmpty() const {
+  for (int i = 0; i < 6; i++) {
+    if (state.GetTop(i).GetLength()) return false;
+  }
+  return true;
+}
+
 }
