@@ -57,12 +57,22 @@ class Brancher {
     if (node == null) {
       return run(f, new BrancherNode(0, new SixStair.from(start), ''));
     }
-    if (!f(node)) return false;
+    if (node.depth == maxDepth) {
+      if (!f(node)) return false;
+    }
     if (node.depth < maxDepth) {
       for (BrancherNode n in node.expand()) {
         if (!run(f, n)) return false;
       }
     }
     return true;
+  }
+  
+  static void iterativeSearch(SixStair start, int max, BrancherCallback f,
+                              {bool verbose: true}) {
+    for (int i = 0; i <= max; i++) {
+      if (verbose) print('iterative search, depth is $i');
+      if (!new Brancher(i, start).run(f)) return;
+    }
   }
 }

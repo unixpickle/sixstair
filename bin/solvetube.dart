@@ -34,7 +34,7 @@ String attemptSolve(SixStair s, int depth, Set<int> tubes) {
   new Brancher(depth, s).run((BrancherNode n) {
     if (n.depth < depth) return true;
     for (int tube in tubes) {
-      if (!n.item.isTubeSolved(tube)) {
+      if (!Checker.isTubeSolved(n.item, tube)) {
         return true;
       }
     }

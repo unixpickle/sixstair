@@ -31,7 +31,7 @@ String attemptSolve(SixStair s, int depth, int count) {
   new Brancher(depth, s).run((BrancherNode n) {
     if (n.depth < depth) return true;
     if (n.item.isFlipped) return true;
-    if (!n.item.isBottomSolved(count)) {
+    if (!Checker.isBottomSolved(n.item, count)) {
       return true;
     }
     if (n.algorithm.length > 0) {

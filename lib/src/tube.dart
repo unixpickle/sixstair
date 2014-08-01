@@ -69,4 +69,13 @@ class Tube {
       this[length - 1 - i] = temp;
     }
   }
+  
+  bool operator==(Tube t) {
+    if (t.capacity != capacity) return false;
+    if (t.length != length) return false;
+    for (int i = 0; i < length; i++) {
+      if (t[i] != this[i]) return false;
+    }
+    return true;
+  }
 }

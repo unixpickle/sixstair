@@ -11,3 +11,5 @@ part 'src/move.dart';
 part 'src/algorithm.dart';
 part 'src/brancher.dart';
 part 'src/input.dart';
+part 'src/checker.dart';
+part 'src/hasher.dart';

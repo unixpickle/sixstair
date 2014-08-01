@@ -110,47 +110,6 @@ class SixStair {
   }
   
   /**
-   * Return a number which represents the layout of the [color] balls.
-   * 
-   * You may optionally ignore other colors for this index by passing a list of
-   * colors to [ignore].
-   */
-  int indexChoose(int color, {List<int> ignore: null}) {
-    List<int> colors = toColorList(ignore: ignore);
-    List<bool> flags = new List.from(colors.map((x) => x == color));
-    return new _ChooseEncoder(flags, color).generateHash();
-  }
-  
-  /**
-   * Returns a number in the range (0, 162954791) which represents the layout of
-   * the orange and green balls. This range is derived from the product of
-   * (21 choose 6) and (15 choose 5).
-   */
-  int indexMajorPair() {
-    return indexChoose(6) * 3003 + indexChoose(5, ignore: [6]);
-  }
-  
-  bool isTubeSolved(int size) {
-    for (int i = 0; i < 6; i++) {
-      if (bottomTubes[i].capacity != size) continue;
-      return bottomTubes[i].solved;
-    }
-    return false;
-  }
-  
-  bool isBottomSolved(int count) {
-    for (int i = 0; i < 6; i++) {
-      Tube t = bottomTubes[i];
-      int req = t.capacity > count ? count : t.capacity;
-      if (req > t.length) return false;
-      for (int j = 0; j < req; j++) {
-        if (t[j] != t.capacity) return false; 
-      }
-    }
-    return true;
-  }
-  
-  /**
    * Generate an ordered list of colors. The list simply iterates through the
    * colors in each tube starting with the top left-most tube, moving to the
    * bottom leftmost tube, etc.
@@ -241,6 +200,14 @@ class SixStair {
     }
     
     return buffer.toString();
+  }
+  
+  bool operator==(SixStair s) {
+    for (int i = 0; i < 6; i++) {
+      if (topTubes[i] != s.topTubes[i]) return false;
+      if (bottomTubes[i] != s.bottomTubes[i]) return false;
+    }
+    return true;
   }
   
   void _applyGravity() {
