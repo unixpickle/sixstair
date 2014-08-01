@@ -1,7 +1,6 @@
 #include "printing-tube-solver.hpp"
 #include "input.hpp"
 #include <iostream>
-#include <sstream>
 
 using namespace sixstair;
 using std::cout;
@@ -27,10 +26,9 @@ int main(int argc, const char * argv[]) {
     return 1;
   }
   
-  std::stringstream err("");
-  State * s = ReadState(cout, cin, err);
+  State * s = ReadState(cout, cin, cerr);
   if (!s) {
-    cerr << err.str() << endl;
+    cerr << endl;
     return 1;
   }
   State state(*s);

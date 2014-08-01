@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include "printing-state-solver.hpp"
 #include "input.hpp"
 
@@ -13,7 +12,7 @@ StateSolver::StateDesc ReadDescription();
 
 int main(int argc, const char * argv[]) {
   if (argc > 2) {
-    cerr << "Usage: SixStairSolver [--only-one]" << endl;
+    cerr << "Usage: wildcardsolve [--only-one]" << endl;
     return 1;
   }
   
@@ -25,10 +24,9 @@ int main(int argc, const char * argv[]) {
     return 1;
   }
   
-  std::stringstream err("");
-  State * s = ReadState(cout, cin, err);
+  State * s = ReadState(cout, cin, cerr);
   if (!s) {
-    cerr << err.str() << endl;
+    cerr << endl;
     return 1;
   }
   State state(*s);

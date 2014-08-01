@@ -36,6 +36,7 @@
 		FAF8A4A8198C0A4000928D58 /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8320198B22480061689B /* state.cpp */; };
 		FAF8A4A9198C0A4300928D58 /* tube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D8322198B22480061689B /* tube.cpp */; };
 		FAF8A4AA198C0A4C00928D58 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2D833A198B25610061689B /* input.cpp */; };
+		FAF8A4AD198C0AB200928D58 /* linear-solver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF8A4AB198C0AB200928D58 /* linear-solver.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +98,8 @@
 		FAF8A49F198C09F200928D58 /* printing-state-solver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "printing-state-solver.cpp"; sourceTree = "<group>"; };
 		FAF8A4A0198C09F200928D58 /* printing-state-solver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "printing-state-solver.hpp"; sourceTree = "<group>"; };
 		FAF8A4A2198C0A0000928D58 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FAF8A4AB198C0AB200928D58 /* linear-solver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "linear-solver.cpp"; sourceTree = "<group>"; };
+		FAF8A4AC198C0AB200928D58 /* linear-solver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "linear-solver.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				FAF8A4A2198C0A0000928D58 /* main.cpp */,
+				FAF8A4AB198C0AB200928D58 /* linear-solver.cpp */,
+				FAF8A4AC198C0AB200928D58 /* linear-solver.hpp */,
 			);
 			path = SixStairSolver;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 				FA2D833C198B25610061689B /* input.cpp in Sources */,
 				FA2D8326198B22480061689B /* search.cpp in Sources */,
 				FA2D8324198B22480061689B /* checker.cpp in Sources */,
+				FAF8A4AD198C0AB200928D58 /* linear-solver.cpp in Sources */,
 				FA2D8325198B22480061689B /* move-list.cpp in Sources */,
 				FA2D8328198B22480061689B /* tube.cpp in Sources */,
 			);

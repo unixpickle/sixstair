@@ -12,6 +12,7 @@ public:
   bool IsTubeSolved(int size) const;
   bool AreDregsSolved(int depth) const;
   bool IsTopEmpty() const;
+  bool AreStepsSolved(int ballCount) const;
   
 private:
   const State & state;
