@@ -35,6 +35,8 @@ bool Checker::IsTopEmpty() const {
 }
 
 bool Checker::AreStepsSolved(int ballCount) const {
+  if (state.IsFlipped()) return false;
+  
   int idx = 0;
   
   int offset;
