@@ -11,6 +11,23 @@ type State struct {
 	Flipped bool
 }
 
+// CopyState duplicates a source state into a destination state.
+func CopyState(dest *State, source *State) {
+	dest.Flipped = source.Flipped
+	for i := 0; i < 6; i++ {
+		s := source.Top[i]
+		d := dest.Top[i]
+		d.Length = s.Length
+		d.Capacity = s.Capacity
+		copy(d.Cells[:], s.Cells[:])
+		s = source.Bottom[i]
+		d = dest.Bottom[i]
+		d.Length = s.Length
+		d.Capacity = s.Capacity
+		copy(d.Cells[:], s.Cells[:])
+	}
+}
+
 // SolvedState returns the solved SixStair.
 func SolvedState() *State {
 	s := State{}

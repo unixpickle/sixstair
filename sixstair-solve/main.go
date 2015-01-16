@@ -16,6 +16,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+	
 	goal := sixstair.SolveGoal{}
 	for moves := 0;; moves++ {
 		fmt.Println("Trying", moves, "moves...")
