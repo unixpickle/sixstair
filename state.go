@@ -98,12 +98,13 @@ func (s *State) String() string {
 	for idx := 0; idx < 7; idx++ {
 		for i := 0; i < 6; i++ {
 			t := s.Bottom[i]
+			baseIdx := t.Capacity - (idx+1)
 			if t.Capacity == idx {
 				str += " _ "
 			} else if t.Capacity < idx {
 				str += "   "
-			} else if t.Length > idx {
-				str += "|" + strconv.Itoa(t.Cells[idx]) + "|"
+			} else if t.Length > baseIdx {
+				str += "|" + strconv.Itoa(t.Cells[baseIdx]) + "|"
 			} else {
 				str += "| |"
 			}

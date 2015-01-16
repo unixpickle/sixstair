@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CFF8E200-FCE1-481B-9665-531BC3141498</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SixStairSolver</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0D4E25ECA24EA30DACD6AD3BC065520AC6C5FA5B</key>
+		<string>github.com:unixpickle/sixstair.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>cpp/SixStairSolver/SixStairSolver.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0D4E25ECA24EA30DACD6AD3BC065520AC6C5FA5B</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:unixpickle/sixstair.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0D4E25ECA24EA30DACD6AD3BC065520AC6C5FA5B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0D4E25ECA24EA30DACD6AD3BC065520AC6C5FA5B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>sixstair</string>
+		</dict>
+	</array>
+</dict>
+</plist>

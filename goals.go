@@ -10,16 +10,15 @@ func (_ SolveGoal) IsGoal(s *State) bool {
 	}
 
 	// Make sure that:
-	// - each tube has the right capacity
 	// - each tube has the right length
 	// - each tube's balls are all the right color
 	for i := 0; i < 6; i++ {
 		tube := s.Bottom[i]
-		if tube.Capacity != i+1 || tube.Capacity != tube.Length {
+		if tube.Capacity != tube.Length {
 			return false
 		}
-		for j := 0; j <= i; j++ {
-			if s.Bottom[i].Cells[j] != i+1 {
+		for j := 0; j < tube.Length; j++ {
+			if tube.Cells[j] != tube.Capacity {
 				return false
 			}
 		}

@@ -10,16 +10,16 @@ type Move struct {
 	Count     int
 }
 
-func AllMoves() []*Move {
-	res := make([]*Move, 1, 11)
-	res[0] = &Move{Flip: true}
+func AllMoves() []Move {
+	res := make([]Move, 1, 11)
+	res[0] = Move{Flip: true}
 	for i := 1; i < 6; i++ {
-		res = append(res, &Move{false, true, i}, &Move{false, false, i})
+		res = append(res, Move{false, true, i}, Move{false, false, i})
 	}
 	return res
 }
 
-func (m *Move) Apply(s *State) {
+func (m Move) Apply(s *State) {
 	if m.Flip {
 		s.Flip()
 		return
@@ -29,7 +29,7 @@ func (m *Move) Apply(s *State) {
 	}
 }
 
-func (m *Move) String() string {
+func (m Move) String() string {
 	if m.Flip {
 		return "F"
 	} else if m.Clockwise {
