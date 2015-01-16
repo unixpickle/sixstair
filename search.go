@@ -2,6 +2,7 @@ package sixstair
 
 import (
 	"errors"
+	"sync"
 )
 
 // ErrNoSolution is returned by Search when no solution can be found.
@@ -28,6 +29,8 @@ func Search(s *State, g Goal, depth int) ([]Move, error) {
 	}
 
 	ch := make(chan []Move, 11)
+	wg := sync.WaitGroup{}
+	wg.Add(11)
 
 	go func() {
 		// Attempt a flip move to solve the puzzle.
@@ -36,9 +39,8 @@ func Search(s *State, g Goal, depth int) ([]Move, error) {
 		if moves, _ := basicSearch(sCopy, g, depth-1); moves != nil {
 			flip := Move{Flip: true}
 			ch <- append([]Move{flip}, moves...)
-		} else {
-			ch <- nil
 		}
+		wg.Done()
 	}()
 
 	// Perform various top rotations.
@@ -50,17 +52,18 @@ func Search(s *State, g Goal, depth int) ([]Move, error) {
 				move.Apply(sCopy)
 				if moves, _ := basicSearch(sCopy, g, depth-1); moves != nil {
 					ch <- append([]Move{move}, moves...)
-				} else {
-					ch <- nil
 				}
+				wg.Done()
 			}(i, j)
 		}
 	}
 
-	for obj := range ch {
-		if obj != nil {
-			return obj, nil
-		}
+	// Wait for all the background routines to finish, then see if there's a
+	// solution waiting for us.
+	wg.Wait()
+	close(ch)
+	if solution := <-ch; solution != nil {
+		return solution, nil
 	}
 
 	return nil, ErrNoSolution

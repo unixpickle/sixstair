@@ -44,7 +44,7 @@ func processLine(line string, idx int) ([]int, error) {
 	for i, rune := range runes {
 		// See if it's a numbered color.
 		if rune >= '1' && rune <= '6' {
-			res[i] = int(rune - '1')
+			res[i] = int(rune-'1') + 1
 			continue
 		}
 

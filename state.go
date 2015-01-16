@@ -26,8 +26,14 @@ func SolvedState() *State {
 
 // Clone returns a deep copy of a state.
 func (s *State) Clone() *State {
-	x := *s
-	return &x
+	c := &State{Flipped: s.Flipped}
+	for i := 0; i < 6; i++ {
+		x := *s.Top[i]
+		c.Top[i] = &x
+		y := *s.Bottom[i]
+		c.Bottom[i] = &y
+	}
+	return c
 }
 
 // Flip turns the SixStair upside-down.
