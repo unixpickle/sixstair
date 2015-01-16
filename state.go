@@ -1,6 +1,8 @@
 package sixstair
 
-import "strconv"
+import (
+	"strconv"
+)
 
 // A State represents the state of a SixStair puzzle.
 type State struct {
@@ -20,6 +22,12 @@ func SolvedState() *State {
 		}
 	}
 	return &s
+}
+
+// Clone returns a deep copy of a state.
+func (s *State) Clone() *State {
+	x := *s
+	return &x
 }
 
 // Flip turns the SixStair upside-down.
