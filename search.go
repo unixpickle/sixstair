@@ -27,6 +27,70 @@ func Search(s *State, g Goal, depth int) ([]Move, error) {
 		return nil, ErrNoSolution
 	}
 
+	ch := make(chan []Move, 11)
+
+	go func() {
+		// Attempt a flip move to solve the puzzle.
+		sCopy := s.Clone()
+		sCopy.Flip()
+		if moves, _ := basicSearch(sCopy, g, depth-1); moves != nil {
+			flip := Move{Flip: true}
+			ch <- append([]Move{flip}, moves...)
+		} else {
+			ch <- nil
+		}
+	}()
+
+	// Perform various top rotations.
+	for i := 1; i < 6; i++ {
+		for j := 0; j < 2; j++ {
+			go func(i int, j int) {
+				move := Move{false, j == 0, i}
+				sCopy := s.Clone()
+				move.Apply(sCopy)
+				if moves, _ := basicSearch(sCopy, g, depth-1); moves != nil {
+					ch <- append([]Move{move}, moves...)
+				} else {
+					ch <- nil
+				}
+			}(i, j)
+		}
+	}
+
+	for obj := range ch {
+		if obj != nil {
+			return obj, nil
+		}
+	}
+
+	return nil, ErrNoSolution
+}
+
+// Optimal uses iterative deepening to find an optimal sequence of moves to get
+// from a state to a goal.
+// The max argument specifies the maximum number of moves to explore.
+// If no solution is found, ErrNoSolution is returned.
+func Optimal(s *State, g Goal, max int) ([]Move, error) {
+	for i := 0; i <= max; i++ {
+		solution, _ := Search(s, g, i)
+		if solution != nil {
+			return solution, nil
+		}
+	}
+	return nil, ErrNoSolution
+}
+
+func basicSearch(s *State, g Goal, depth int) ([]Move, error) {
+	// If we are at the goal, we found a trivial solution.
+	if g.IsGoal(s) {
+		return []Move{}, nil
+	}
+
+	// If the maximum length is zero, there is no solution.
+	if depth == 0 {
+		return nil, ErrNoSolution
+	}
+
 	// Attempt a flip move to solve the puzzle.
 	sCopy := s.Clone()
 	sCopy.Flip()
@@ -47,19 +111,5 @@ func Search(s *State, g Goal, depth int) ([]Move, error) {
 		}
 	}
 
-	return nil, ErrNoSolution
-}
-
-// Optimal uses iterative deepening to find an optimal sequence of moves to get
-// from a state to a goal.
-// The max argument specifies the maximum number of moves to explore.
-// If no solution is found, ErrNoSolution is returned.
-func Optimal(s *State, g Goal, max int) ([]Move, error) {
-	for i := 0; i <= max; i++ {
-		solution, _ := Search(s, g, i)
-		if solution != nil {
-			return solution, nil
-		}
-	}
 	return nil, ErrNoSolution
 }
