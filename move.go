@@ -4,37 +4,35 @@ import (
 	"strconv"
 )
 
-type Move struct {
-	Flip      bool
-	Clockwise bool
-	Count     int
-}
+type Move int
 
-func AllMoves() []Move {
-	res := make([]Move, 1, 11)
-	res[0] = Move{Flip: true}
+func AllMoves() [11]Move {
+	var res [11]Move
 	for i := 1; i < 6; i++ {
-		res = append(res, Move{false, true, i}, Move{false, false, i})
+		res[(i-1)*2] = Move(i)
 	}
+	res[10] = Move(0)
 	return res
 }
 
 func (m Move) Apply(s *State) {
-	if m.Flip {
+	if m == 0 {
 		s.Flip()
-		return
-	}
-	for i := 0; i < m.Count; i++ {
-		s.Turn(m.Clockwise)
+	} else if m > 0 {
+		for i := 0; i < int(m); i++ {
+			s.Turn(true)
+		}
+	} else {
+		for i := 0; i < -int(m); i++ {
+			s.Turn(false)
+		}
 	}
 }
 
 func (m Move) String() string {
-	if m.Flip {
+	if m == 0 {
 		return "F"
-	} else if m.Clockwise {
-		return "T" + strconv.Itoa(m.Count)
 	} else {
-		return "T-" + strconv.Itoa(m.Count)
+		return "T" + strconv.Itoa(int(m))
 	}
 }

@@ -1,138 +1,98 @@
 package sixstair
 
 import (
-	"errors"
 	"sync"
 )
-
-// ErrNoSolution is returned by Search when no solution can be found.
-var ErrNoSolution = errors.New("No solution found.")
 
 // A Goal determines whether or not a state is "good" for a particular search.
 type Goal interface {
 	IsGoal(s *State) bool
 }
 
+// DistSearch does exactly the same thing as Search, except it parallelizes the
+// first layer of the search.
+func DistSearch(s *State, g Goal, depth int) []Move {
+	moves := AllMoves()
+	wg := sync.WaitGroup{}
+	wg.Add(len(moves))
+	solution := make(chan []Move, len(moves))
+	for _, move := range moves {
+		go func(move Move) {
+			puzzle := *s
+			if res := Search(&puzzle, g, depth-1); res != nil {
+				solution <- res
+			}
+			wg.Done()
+		}(move)
+	}
+	wg.Wait()
+	return <-solution
+}
+
 // Search uses depth-first search to find a sequence of moves that arrives at a
 // given goal from a starting state.
 // The depth argument specifies the maximum number of moves to try.
-// If no solution is found, ErrNoSolution is returned.
-func Search(s *State, g Goal, depth int) ([]Move, error) {
-	// If we are at the goal, we found a trivial solution.
-	if g.IsGoal(s) {
-		return []Move{}, nil
-	}
-
-	// If the maximum length is zero, there is no solution.
-	if depth == 0 {
-		return nil, ErrNoSolution
-	}
-
-	ch := make(chan []Move, 11)
-	wg := sync.WaitGroup{}
-	wg.Add(11)
-
-	go func() {
-		// Attempt a flip move to solve the puzzle.
-		sCopy := s.Clone()
-		sCopy.Flip()
-		if moves := runBasicSearch(sCopy, g, depth-1); moves != nil {
-			flip := Move{Flip: true}
-			ch <- append([]Move{flip}, moves...)
-		}
-		wg.Done()
-	}()
-
-	// Perform various top rotations.
-	for i := 1; i < 6; i++ {
-		for j := 0; j < 2; j++ {
-			go func(i int, j int) {
-				move := Move{false, j == 0, i}
-				sCopy := s.Clone()
-				move.Apply(sCopy)
-				if moves := runBasicSearch(sCopy, g, depth-1); moves != nil {
-					ch <- append([]Move{move}, moves...)
-				}
-				wg.Done()
-			}(i, j)
-		}
-	}
-
-	// Wait for all the background routines to finish, then see if there's a
-	// solution waiting for us.
-	wg.Wait()
-	close(ch)
-	if solution := <-ch; solution != nil {
-		return solution, nil
-	}
-
-	return nil, ErrNoSolution
+// If no solution is found, nil is returned.
+func Search(s *State, g Goal, depth int) []Move {
+	return search(s, g, depth, 2, false)
 }
 
 // Optimal uses iterative deepening to find an optimal sequence of moves to get
 // from a state to a goal.
 // The max argument specifies the maximum number of moves to explore.
-// If no solution is found, ErrNoSolution is returned.
-func Optimal(s *State, g Goal, max int) ([]Move, error) {
+// If no solution is found, nil is returned.
+func Optimal(s *State, g Goal, max int) []Move {
 	for i := 0; i <= max; i++ {
-		solution, _ := Search(s, g, i)
-		if solution != nil {
-			return solution, nil
+		if solution := Search(s, g, i); solution != nil {
+			return solution
 		}
 	}
-	return nil, ErrNoSolution
+	return nil
 }
 
-type basicSearch struct {
-	max  int
-	temp []*State
-	goal Goal
-}
-
-func newBasicSearch(g Goal, depth int) *basicSearch {
-	temp := make([]*State, depth)
-	for i := 0; i < depth; i++ {
-		temp[i] = SolvedState()
-	}
-	return &basicSearch{depth, temp, g}
-}
-
-func runBasicSearch(s *State, g Goal, maxDepth int) []Move {
-	return newBasicSearch(g, maxDepth).Run(s, 0)
-}
-
-func (b *basicSearch) Run(s *State, depth int) []Move {
-	// Check for the trivial solution.
-	if b.goal.IsGoal(s) {
+func search(s *State, g Goal, depth int, h int, f bool) []Move {
+	// If we are at the goal, we found a trivial solution.
+	if g.IsGoal(s) {
 		return []Move{}
 	}
-	
-	// Check if we can't search anymore.
-	if depth == b.max {
+
+	// If the maximum length is zero, there is no solution.
+	if depth == 0 {
 		return nil
 	}
-	
-	temp := b.temp[depth]
-	CopyState(temp, s)
-	
-	// Attempt a flip move to solve the puzzle.
-	temp.Flip()
-	if moves := b.Run(temp, depth+1); moves != nil {
-		flip := Move{Flip: true}
-		return append([]Move{flip}, moves...)
-	}
 
-	// Perform various top rotations.
-	for i := 1; i < 6; i++ {
-		for j := 0; j < 2; j++ {
-			move := Move{false, j == 0, i}
-			CopyState(temp, s)
-			move.Apply(temp)
-			if moves := b.Run(temp, depth+1); moves != nil {
-				return append([]Move{move}, moves...)
-			}
+	// Perform a flip move.
+	if !f {
+		state := *s
+		state.Flip()
+		if x := search(&state, g, depth-1, 2, true); x != nil {
+			return append([]Move{Move(0)}, x...)
 		}
 	}
-	
+
+	// If the last two moves were turns, the next move cannot be a turn as well.
+	// TODO: make *sure* this is true.
+	if h == 0 {
+		return nil
+	}
+
+	// Perform positive moves.
+	state := *s
+	for i := 1; i < 6; i++ {
+		state.Turn(true)
+		if x := search(&state, g, depth-1, h-1, false); x != nil {
+			return append([]Move{Move(i)}, x...)
+		}
+	}
+
+	// Perform negative moves.
+	state = *s
+	for i := 1; i < 6; i++ {
+		state.Turn(false)
+		if x := search(&state, g, depth-1, h-1, false); x != nil {
+			return append([]Move{Move(-i)}, x...)
+		}
+	}
+
 	return nil
 }

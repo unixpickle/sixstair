@@ -6,51 +6,22 @@ import (
 
 // A State represents the state of a SixStair puzzle.
 type State struct {
-	Top     [6]*Tube
-	Bottom  [6]*Tube
+	Top     [6]Tube
+	Bottom  [6]Tube
 	Flipped bool
-}
-
-// CopyState duplicates a source state into a destination state.
-func CopyState(dest *State, source *State) {
-	dest.Flipped = source.Flipped
-	for i := 0; i < 6; i++ {
-		s := source.Top[i]
-		d := dest.Top[i]
-		d.Length = s.Length
-		d.Capacity = s.Capacity
-		copy(d.Cells[:], s.Cells[:])
-		s = source.Bottom[i]
-		d = dest.Bottom[i]
-		d.Length = s.Length
-		d.Capacity = s.Capacity
-		copy(d.Cells[:], s.Cells[:])
-	}
 }
 
 // SolvedState returns the solved SixStair.
 func SolvedState() *State {
-	s := State{}
+	var s State
 	for i := 0; i < 6; i++ {
-		s.Top[i] = &Tube{Capacity: i + 1, Length: 0}
-		s.Bottom[i] = &Tube{Capacity: i + 1, Length: i + 1}
+		s.Top[i] = Tube{Capacity: i + 1, Length: 0}
+		s.Bottom[i] = Tube{Capacity: i + 1, Length: i + 1}
 		for j := 0; j <= i; j++ {
 			s.Bottom[i].Cells[j] = i + 1
 		}
 	}
 	return &s
-}
-
-// Clone returns a deep copy of a state.
-func (s *State) Clone() *State {
-	c := &State{Flipped: s.Flipped}
-	for i := 0; i < 6; i++ {
-		x := *s.Top[i]
-		c.Top[i] = &x
-		y := *s.Bottom[i]
-		c.Bottom[i] = &y
-	}
-	return c
 }
 
 // Flip turns the SixStair upside-down.
@@ -98,7 +69,7 @@ func (s *State) String() string {
 	for idx := 0; idx < 7; idx++ {
 		for i := 0; i < 6; i++ {
 			t := s.Bottom[i]
-			baseIdx := t.Capacity - (idx+1)
+			baseIdx := t.Capacity - (idx + 1)
 			if t.Capacity == idx {
 				str += " _ "
 			} else if t.Capacity < idx {
@@ -133,8 +104,8 @@ func (s *State) Turn(clockwise bool) {
 
 func (s *State) gravity() {
 	for i := 0; i < 6; i++ {
-		top := s.Top[i]
-		bottom := s.Bottom[i]
+		top := &s.Top[i]
+		bottom := &s.Bottom[i]
 		for top.Length > 0 && bottom.Length < bottom.Capacity {
 			bottom.Push(top.PopFront())
 		}
