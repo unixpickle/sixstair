@@ -41,7 +41,7 @@ func (goal StepGoal) IsGoal(s *State) bool {
 
 	var startIdx int
 	for i := 0; i < 6; i++ {
-		if s.Bottom[i].Capacity == 5 {
+		if s.Bottom[i].Capacity == 6 {
 			startIdx = i
 			break
 		}
