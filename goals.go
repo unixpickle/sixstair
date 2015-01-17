@@ -1,5 +1,44 @@
 package sixstair
 
+// A BackStepGoal is satisfied when the last N balls of a SixStair are solved.
+type BackStepGoal int
+
+// IsGoal returns true if the given state has the last N balls solved, where N
+// is int(goal).
+func (goal BackStepGoal) IsGoal(s *State) bool {
+	if s.Flipped {
+		return false
+	}
+
+	var startIdx int
+	for i := 0; i < 6; i++ {
+		if s.Bottom[i].Capacity == 1 {
+			startIdx = i
+			break
+		}
+	}
+	remaining := int(goal)
+	for i := 0; i < 6 && remaining > 0; i++ {
+		idx := (startIdx + i) % 6
+		tube := s.Bottom[idx]
+
+		// If the tube could have more but doesn't, this is not the goal.
+		if remaining > tube.Length && tube.Length < tube.Capacity {
+			return false
+		}
+
+		// Make sure the tube contains balls of the correct color.
+		for j := 0; j < tube.Length && remaining > 0; j++ {
+			remaining--
+			if tube.Cells[j] != i+1 {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
 // A SolveGoal is only satisfied when a SixStair is completely solved.
 type SolveGoal struct{}
 

@@ -18,8 +18,8 @@ func main() {
 	
 	for progress := 1; progress < 22; progress++ {
 		fmt.Print("Doing ", progress, " ... ")
-		goal := sixstair.StepGoal(progress)
-		opt := sixstair.Optimal(state, goal, 12)
+		goal := sixstair.BackStepGoal(progress)
+		opt := sixstair.DistOptimal(state, goal, 12)
 		if opt == nil {
 			fmt.Println("Failed. No solution <= 12 moves.")
 			return
