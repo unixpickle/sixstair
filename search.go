@@ -26,22 +26,22 @@ func DistSearch(s *State, g Goal, depth int) []Move {
 	if depth <= 1 {
 		return Search(s, g, depth)
 	}
-	
+
 	moves := AllMoves()
-	
+
 	wg := sync.WaitGroup{}
 	wg.Add(len(moves))
-	
+
 	var solution []Move
 	var solutionLock sync.Mutex
 	c := lockCanceller{}
-	
+
 	// Launch a goroutine for each move
 	for _, move := range moves {
 		go func(move Move) {
 			puzzle := *s
 			move.Apply(&puzzle)
-			
+
 			// Make sure the heuristics are passed correctly
 			h := 1
 			blockFlip := false
@@ -49,7 +49,7 @@ func DistSearch(s *State, g Goal, depth int) []Move {
 				h = 2
 				blockFlip = true
 			}
-			
+
 			if res := search(&puzzle, g, depth-1, h, blockFlip, c); res != nil {
 				// Set the solution and cancel the other goroutines.
 				solutionLock.Lock()
@@ -60,7 +60,7 @@ func DistSearch(s *State, g Goal, depth int) []Move {
 			wg.Done()
 		}(move)
 	}
-	
+
 	wg.Wait()
 	return solution
 }

@@ -18,12 +18,12 @@ func main() {
 	}
 
 	goal := sixstair.SolveGoal{}
-	for moves := 0;; moves++ {
+	for moves := 0; ; moves++ {
 		fmt.Println("Trying", moves, "moves...")
 		solution := sixstair.Search(state, goal, moves)
 		if solution != nil {
 			// We're done
-			fmt.Println("Found solution:", solution, "(" +
+			fmt.Println("Found solution:", solution, "("+
 				strconv.Itoa(len(solution)), "moves)")
 			return
 		}

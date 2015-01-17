@@ -15,7 +15,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	
+
 	for progress := 1; progress < 22; progress++ {
 		fmt.Print("Doing ", progress, " ... ")
 		goal := sixstair.BackStepGoal(progress)
