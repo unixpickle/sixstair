@@ -50,7 +50,7 @@ func DistSearch(s *State, g Goal, depth int) []Move {
 				blockFlip = true
 			}
 
-			if res := search(&puzzle, g, depth-1, h, blockFlip, c); res != nil {
+			if res := search(&puzzle, g, depth-1, h, blockFlip, &c); res != nil {
 				// Set the solution and cancel the other goroutines.
 				solutionLock.Lock()
 				solution = append([]Move{move}, res...)
@@ -84,7 +84,7 @@ func Optimal(s *State, g Goal, max int) []Move {
 // The depth argument specifies the maximum number of moves to try.
 // If no solution is found, nil is returned.
 func Search(s *State, g Goal, depth int) []Move {
-	return search(s, g, depth, 2, false, neverCanceller{})
+	return search(s, g, depth, 2, false, &neverCanceller{})
 }
 
 func search(s *State, g Goal, depth int, h int, f bool, c canceller) []Move {
@@ -155,13 +155,13 @@ type lockCanceller struct {
 	done  bool
 }
 
-func (c lockCanceller) Cancel() {
+func (c *lockCanceller) Cancel() {
 	c.mutex.Lock()
 	c.done = true
 	c.mutex.Unlock()
 }
 
-func (c lockCanceller) Done() bool {
+func (c *lockCanceller) Done() bool {
 	c.mutex.RLock()
 	defer c.mutex.RUnlock()
 	return c.done
