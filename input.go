@@ -11,6 +11,14 @@ func ReadState() (*State, error) {
 	result := SolvedState()
 
 	fmt.Println("Please ensure that no balls are in the top tubes.")
+	fmt.Println()
+	fmt.Println("Hold the puzzle so that the smallest tube is in front, and")
+	fmt.Println("the tubes get larger counter-clockwise when looking from")
+	fmt.Println("the top.")
+	fmt.Println()
+	fmt.Println("Enter each tube from bottom to top, with the letters:")
+	fmt.Println("D=black W=white B=blue Y=yellow G=green R=red")
+	fmt.Println()
 	for i := 0; i < 6; i++ {
 		// Read the line
 		fmt.Print("Enter tube " + strconv.Itoa(i+1) + ": ")
